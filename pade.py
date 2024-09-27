@@ -28,11 +28,11 @@ def pade(time,signal,sigma=100.0,max_len=None,w_min=0.0,w_max=10.0,w_step=0.01,r
 
     # center signal about zero
     signal = np.asarray(signal) - signal[0]
-      
+
     stepsize = time[1] - time[0]
 
     # Damp the signal with an exponential decay. 
-    damp = np.exp(-(stepsize*np.arange(len(signal)))/float(sigma))
+    damp = np.exp(-(stepsize*(1+np.arange(len(signal))))/float(sigma))
     signal *= damp
 
     M = len(signal)
@@ -74,7 +74,7 @@ def pade(time,signal,sigma=100.0,max_len=None,w_min=0.0,w_max=10.0,w_step=0.01,r
     else:
         frequency = read_freq
 
-    W = np.exp(-1j*frequency*stepsize)
+    W = np.exp(1j*frequency*stepsize)
 
     fsignal = p(W)/q(W)
 
